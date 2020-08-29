@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% block title %} WhoDaMan - Play {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div>
+        <div class="jumbotron">
+            <h1 class="display-3">WhoDaMan</h1>
+            <form id="start">
+                <input type="text" class="form-control" maxlength="100" id="name" placeholder="Your Name">
+            </form>
+        </div>
+        <div id="panel" style="display: none;">
+            <div id="state">Waiting...</div>
+            <button id="buzz" type="submit" style="display: none;" class="btn btn-primary btn-lg">Buzz</button>
+        </div>
+        <ul id="buzzes"></ul>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="/static/play.js"></script>
+{% endblock %}

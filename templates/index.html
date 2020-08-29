@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %} WhoDaMan - A Jeopardy! Game {% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+{% block content %}
+    <div class="jumbotron">
+        <h1 class="display-3">WhoDaMan</h1>
+        <p class="lead">Answer Jeopardy! questions against friends</p>
+        <form id="start">
+            <input id="room" class="form-control" type="text" placeholder="Game Name" />
+        </form>
+        <hr class="my-4">
+        <p class="lead">
+            <a class="btn btn-primary btn-lg" href="/admin" role="button">Create a game</a>
+        </p>
+    </div>
+{% endblock %}
+{% block scripts %}
+    <script src="/static/index.js"></script>
+{% endblock %}
