@@ -5,32 +5,47 @@
     {{ super() }}
 {% endblock %}
 {% block content %}
-    <div class="jumbotron">
-        <h1 class="display-3">WhoDaMan</h1>
-        <form id="start">
-            <input id="room" class="form-control" type="text" placeholder="Game Name"/>
-        </form>
-        <p class="lead">Create a game for your friends to join!</p>
-    </div>
-    <div id="panel" style="display: none; width: 85%; margin: auto;">
-        <div id="header" style="width: 100%; display: flex; justify-content: space-between; align-items: flex-start;">
-            <h1 class="display-3">WhoDaMan</h1>
-            <input id="shareLink" class="form-control" type="text" placeholder="room name here" readonly="">
+    <form id="start" class="center">
+      <main>
+          <header>
+            <h1>WhoDaMan</h1>
+          </header>
+          <input id="room" type="text" placeholder="Game Name" />
+          <p>Create a game, and start buzzing in!</p>
+      </main>
+    </form>
+    <main>
+      <section id="panel">
+        <div class="panel__header">
+          <h1>WhoDaMan</h1>
+          <input id="shareLink" disabled />
+        </div>
+        <div class="panel">
+          <div class="panel__header">
+            <div class="panel__label">Leaderboard</div>
+          </div>
+          <ul id="leaderboard">
+          </ul>
+          <div class="panel__header">
+            <div class="panel__label">Players &mdash; <span id="roomCount"></span></div>
             <div>
-                Buzzes -- <span id="roomCount"></span>
+              <button id="begin">Begin</button>
+              <button id="done" style="display: none;">Done</button>
+              <button id="reset" style="display: none;">Next</button>
             </div>
+          </div>
+          <ul id="qcontent">
+          </ul>
+          <div class="panel__header">
+            <div class="panel__label">Buzzes</div>
+            <button id="skip" style="display: none;">Skip</button>
+          </div>
+          <ul id="buzzes">
+          </ul>
         </div>
-        <div class="card bg-light mb-3" style="max-width: 20rem;">
-            <div class="card-header">Instructions</div>
-            <div class="card-body">
-                <p class="card-text">Do the things.</p>
-            </div>
-        </div>
-        <button id="begin" type="button" class="btn btn-primary">Start</button>
-        <button id="reset" type="button" class="btn btn-primary" style="display: none;">Reset</button>
-        <ul id="buzzes"></ul>
-    </div>
+      </section>
+    </main>
 {% endblock %}
 {% block scripts %}
-    <script src="/static/admin.js"></script>
+    <script src="{{ url_for('static', filename='admin.js') }}"></script>
 {% endblock %}

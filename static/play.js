@@ -10,7 +10,10 @@ var data = {
   name: null
 }
 
+$('body').addClass('center')
+
 var count = 0
+$score = $('#score')
 
 $startForm.on('submit', function(event) {
   event.preventDefault()
@@ -37,27 +40,18 @@ socket.on('buzz', function(buzzData) {
   }
 })
 
+socket.on('score', function(scoreData) {
+  var my_score = scoreData.leaderboard[$nameField.val()]
+  $score.html(`${my_score} (${Object.values(scoreData.leaderboard).sort().pop() - my_score} to lead)`)
+})
+
 socket.on('reset', function() {
   count = 0
   $buzzButton.hide()
   $state.show().text('Waiting...')
 })
 
-socket.on('begin', function(data) {
-  setTimeout(function() {
-    $buzzButton.show()
-    $state.hide()
-  }, new Date(data.at) - new Date())
-  
-  setTimeout(function() {
-    $state.text('In 3')
-  }, new Date(data.at) - new Date() - 3000)
-  
-  setTimeout(function() {
-    $state.text('In 2')
-  }, new Date(data.at) - new Date() - 2000)
-  
-  setTimeout(function() {
-    $state.text('In 1')
-  }, new Date(data.at) - new Date() - 1000)
+socket.on('begin', function() {
+  $buzzButton.show()
+  $state.hide()
 })

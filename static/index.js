@@ -3,6 +3,8 @@ var $startForm = $('#start')
 var $roomField = $('#room')
 var data = { room: null }
 
+$('body').addClass('center')
+
 $startForm.on('submit', function(event) {
   event.preventDefault()
   data.room = $roomField.val()

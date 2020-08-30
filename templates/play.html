@@ -5,19 +5,25 @@
 {% endblock %}
 {% block content %}
     <div>
-        <div class="jumbotron">
-            <h1 class="display-3">WhoDaMan</h1>
-            <form id="start">
-                <input type="text" class="form-control" maxlength="100" id="name" placeholder="Your Name">
-            </form>
-        </div>
-        <div id="panel" style="display: none;">
-            <div id="state">Waiting...</div>
-            <button id="buzz" type="submit" style="display: none;" class="btn btn-primary btn-lg">Buzz</button>
+      <main>
+        <form id="start">
+          <header>
+            <h1>
+              WhoDaMan
+            </h1>
+          </header>
+          <input id="name" type="text" maxlength="100" placeholder="Your name">
+          <p>P.S. Your name will be shared with the moderator</p>
+        </form>
+        <div id="panel">
+          <div class="panel__label">Score &mdash; <span id="score">0</span></div>
+          <button id="buzz" type="submit" style="display: none;">⚡️</button>
+          <div id="state">Waiting...</div>
         </div>
         <ul id="buzzes"></ul>
+      </main>
     </div>
 {% endblock %}
 {% block scripts %}
-    <script src="/static/play.js"></script>
+    <script src="{{ url_for('static', filename='play.js') }}"></script>
 {% endblock %}

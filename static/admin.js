@@ -9,10 +9,23 @@ var $buzzes = $('#buzzes')
 var $roomCount = $('#roomCount')
 var data = { room: null }
 
-var count = 0
+$('body').addClass('body--admin')
 
-var instructions = '<li class="paragraph"><b>INSTRUCTIONS</b><br><br>👫 <span class="li">Share the link in the top right to have people join your game.</span>⏱ <span class="li">Press the "Begin" button to start a 3 second countdown until people can buzz in.</span>🎉 <span class="li">Play your game! </span>🤟 <span class="li">Once you\'re ready for the next round, press the "Reset" button. </span>&mdash;<br>Happy Buzzing 🔔<br></li>'
-$buzzes.html(instructions)
+async function getData(url) {
+	const response = await fetch(url)
+	return response.json()
+}
+
+var count = 0
+var leaderboard = {}
+var $leaderboard = $('#leaderboard')
+var stakes = 0
+var $qcontent = $('#qcontent')
+var $doneButton = $('#done')
+var $skipButton = $('#skip')
+
+var instructions = '<li class="paragraph"><b>INSTRUCTIONS</b><br><br>👫 <span class="li">Share the link in the top right to have people join your game.</span>⏱ <span class="li">Press the "Begin" button to start receiving questions to read or to read the next question.</span>👂 <span class="li">When you\'re done reading the question, hit the \'Done\' button to start accepting buzzes.</span>🎉 <span class="li">Play your game! Earn points for getting the question right, but lose points for getting it wrong.</span>🤟 <span class="li">Once you\'re ready for the next round, press the "Next" button. </span></li>'
+$qcontent.html(instructions)
 $roomCount.text('0 people')
 
 $startForm.on('submit', function(event) {
@@ -33,33 +46,109 @@ socket.on('create', function(success) {
   }
 })
 
-$beginButton.on('click', function() {
-  socket.emit('begin', { room: data.room, at: new Date(new Date().getTime() + 3500) }) // begin in 3 seconds + .5 seconds for transit
+$beginButton.on('click', async function() {
+  socket.emit('reset', data)
   $beginButton.hide()
-  $resetButton.show()
-  $buzzes.html('')
+  $doneButton.show()
+  $skipButton.show()
+  const res = await getData('http://jservice.io/api/random?count=1')
+  $qcontent.html(`
+    <li class="paragraph">
+      <b>QUESTION</b>
+      <br>
+      <br>
+      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
+      💯 <span class="li">Points &mdash; ${res[0].value}</span>
+      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+      🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
+    </li>
+  `)
+  stakes = res[0].value
 })
 
-$resetButton.on('click', function() {
-  socket.emit('reset', data)
+$doneButton.on('click', function() {
+  $doneButton.hide()
   $beginButton.show()
-  $resetButton.hide()
+  socket.emit('begin', data)
 })
+
+$skipButton.on('click', async function() {
+  const res = await getData('http://jservice.io/api/random?count=1')
+  $qcontent.html(`
+    <li class="paragraph">
+      <b>QUESTION</b>
+      <br>
+      <br>
+      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
+      💯 <span class="li">Points &mdash; ${res[0].value}</span>
+      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+      🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
+    </li>
+  `)
+  stakes = res[0].value
+  $buzzes.html('')
+  $doneButton.show()
+  $beginButton.hide()
+})
+
+// $resetButton.on('click', function() {
+//   socket.emit('reset', data)
+//   $beginButton.show()
+//   $resetButton.hide()
+// })
+
+function correct(name) {
+  leaderboard[name] += stakes
+  $leaderboard.html(`
+    ${Object.entries(leaderboard).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
+  `)
+  $buzzes.html('')
+  $resetButton.click()
+  data.leaderboard = leaderboard
+  socket.emit('score', data)
+}
+
+function incorrect(name) {
+  leaderboard[name] -= stakes
+  $leaderboard.html(`
+    ${Object.entries(leaderboard).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
+  `)
+  $buzzes.find(':first-child').remove()
+  const next_name = $buzzes.find(':first-child').text().split(' ')[0]
+  $buzzes.find(':first-child').append(`<span><span class="judge" onclick="correct('${next_name}')">✔️</span> <span class="judge" onclick="incorrect('${next_name}')">❌</span></span>`)
+  data.leaderboard = leaderboard
+  socket.emit('score', data)
+}
 
 socket.on('buzz', function(data) {
-  $buzzes.append('<li>' + data.name + '</li>')
+  $buzzes.append(`<li class="panel__header">${data.name} ${$buzzes.children().length > 0 ? '' : `<span><span class="judge" onclick="correct('${data.name}')">✔️</span> <span class="judge" onclick="incorrect('${data.name}')">❌</span></span>`}</li>`)
 })
 
-socket.on('reset', function() {
-  $buzzes.html(instructions)
-})
+// socket.on('reset', async function() {
+//   $buzzes.html('')
+//   const res = await getData('http://jservice.io/api/random?count=1')
+//   $qcontent.html(`
+//     <li class="paragraph">
+//       <b>QUESTION</b>
+//       <br>
+//       <br>
+//       📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
+//       💯 <span class="li">Points &mdash; ${res[0].value}</span>
+//       🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+//       🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
+//     </li>
+//   `)
+//   stakes = res[0].value
+// })
 
 socket.on('leave', function() {
   count--
   $roomCount.text(count === 1 ? count + ' person' : count + ' people')
 })
 
-socket.on('join', function() {
+socket.on('join', function(data) {
   count++
   $roomCount.text(count === 1 ? count + ' person' : count + ' people')
+  $leaderboard.append(`<li class="panel__header">${data.name}<span>0</span></li>`)
+  leaderboard[data.name] = 0
 })

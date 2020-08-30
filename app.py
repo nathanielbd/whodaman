@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, url_for
 from flask_socketio import SocketIO, emit, join_room
 import os
 
@@ -20,7 +20,6 @@ def admin():
 
 @app.route('/<room>')
 def play(room):
-    # add a check to see if the room is a valid room
     return render_template('play.html')
 
 def is_admin(id, room):
@@ -45,7 +44,7 @@ def on_join(data):
     name = data['name']
     room = data['room']
     join_room(room)
-    emit('join', room=room)
+    emit('join', data, room=room)
     print(f'{name} joined {room}')
 
 @socketio.on('buzz')
@@ -80,10 +79,16 @@ def on_reset(data):
 
 @socketio.on('begin')
 def on_begin(data):
-    at = data['at']
     room = data['room']
     if is_admin(request.sid, room):
-        emit('begin', at, room=room)
+        emit('begin', room=room)
+
+@socketio.on('score')
+def on_score(data):
+    leaderboard = data['leaderboard']
+    room = data['room']
+    if is_admin(request.sid, room):
+        emit('score', { 'leaderboard' : leaderboard }, room=room)
 
 if __name__ == '__main__':
     socketio.run(app, debug=True)
