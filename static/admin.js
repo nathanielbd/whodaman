@@ -91,16 +91,10 @@ $skipButton.on('click', async function() {
   $beginButton.hide()
 })
 
-// $resetButton.on('click', function() {
-//   socket.emit('reset', data)
-//   $beginButton.show()
-//   $resetButton.hide()
-// })
-
 function correct(name) {
   leaderboard[name] += stakes
   $leaderboard.html(`
-    ${Object.entries(leaderboard).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
+    ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
   `)
   $buzzes.html('')
   $resetButton.click()
@@ -111,7 +105,7 @@ function correct(name) {
 function incorrect(name) {
   leaderboard[name] -= stakes
   $leaderboard.html(`
-    ${Object.entries(leaderboard).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
+    ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
   `)
   $buzzes.find(':first-child').remove()
   const next_name = $buzzes.find(':first-child').text().split(' ')[0]
@@ -123,23 +117,6 @@ function incorrect(name) {
 socket.on('buzz', function(data) {
   $buzzes.append(`<li class="panel__header">${data.name} ${$buzzes.children().length > 0 ? '' : `<span><span class="judge" onclick="correct('${data.name}')">✔️</span> <span class="judge" onclick="incorrect('${data.name}')">❌</span></span>`}</li>`)
 })
-
-// socket.on('reset', async function() {
-//   $buzzes.html('')
-//   const res = await getData('http://jservice.io/api/random?count=1')
-//   $qcontent.html(`
-//     <li class="paragraph">
-//       <b>QUESTION</b>
-//       <br>
-//       <br>
-//       📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
-//       💯 <span class="li">Points &mdash; ${res[0].value}</span>
-//       🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
-//       🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
-//     </li>
-//   `)
-//   stakes = res[0].value
-// })
 
 socket.on('leave', function() {
   count--
