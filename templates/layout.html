@@ -16,11 +16,6 @@
             {% block content %}
             {% endblock %}
         </div>
-        <script>
-            window.onbeforeunload = function(){
-                return "Are you sure you want to close the window? You may lose progress.";
-            }
-        </script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js" integrity="sha256-yr4fRk/GU1ehYJPAs8P4JlTgu0Hdsp4ZKrx8bDEDC3I=" crossorigin="anonymous"></script>
         <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
         {% block scripts %}
