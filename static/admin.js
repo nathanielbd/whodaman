@@ -51,7 +51,7 @@ $beginButton.on('click', async function() {
   $beginButton.hide()
   $doneButton.show()
   $skipButton.show()
-  const res = await getData('http://jservice.io/api/random?count=1')
+  const res = await getData('https://jservice.io/api/random?count=1')
   $qcontent.html(`
     <li class="paragraph">
       <b>QUESTION</b>
@@ -73,7 +73,7 @@ $doneButton.on('click', function() {
 })
 
 $skipButton.on('click', async function() {
-  const res = await getData('http://jservice.io/api/random?count=1')
+  const res = await getData('https://jservice.io/api/random?count=1')
   $qcontent.html(`
     <li class="paragraph">
       <b>QUESTION</b>
