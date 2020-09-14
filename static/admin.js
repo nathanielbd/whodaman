@@ -35,6 +35,17 @@ $startForm.on('submit', function(event) {
   socket.emit('create', data)
 })
 
+$resetButton.on('click', function() {
+  for (const key in leaderboard) {
+    leaderboard[key] = 0
+  }
+  $leaderboard.html(`
+    ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
+  `)
+  data.leaderboard = leaderboard
+  socket.emit('score', data)
+})
+
 socket.on('create', function(success) {
   if (success) {
     $startForm.hide()
@@ -47,11 +58,13 @@ socket.on('create', function(success) {
 })
 
 $beginButton.on('click', async function() {
-  socket.emit('reset', data)
   $beginButton.hide()
   $doneButton.show()
   $skipButton.show()
   const res = await getData('https://jservice.io/api/random?count=1')
+  let reset_data = data
+  reset_data.res = res
+  socket.emit('reset', reset_data)
   $qcontent.html(`
     <li class="paragraph">
       <b>QUESTION</b>
@@ -87,8 +100,7 @@ $skipButton.on('click', async function() {
   `)
   stakes = res[0].value
   $buzzes.html('')
-  $doneButton.show()
-  $beginButton.hide()
+  $beginButton.click()
 })
 
 function correct(name) {
@@ -97,9 +109,9 @@ function correct(name) {
     ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
   `)
   $buzzes.html('')
-  $resetButton.click()
   data.leaderboard = leaderboard
   socket.emit('score', data)
+  $beginButton.click()
 }
 
 function incorrect(name) {

@@ -75,8 +75,9 @@ def on_create(data):
 @socketio.on('reset')
 def on_reset(data):
     room = data['room']
+    res = data['res']
     if is_admin(request.sid, room):
-        emit('reset', room=room)
+        emit('reset', { 'res': res }, room=room)
 
 @socketio.on('begin')
 def on_begin(data):
