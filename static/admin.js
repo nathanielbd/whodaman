@@ -77,6 +77,10 @@ $beginButton.on('click', async function() {
     </li>
   `)
   stakes = res[0].value
+  $buzzes.html('')
+  if (res[0].value == null) {
+    $skipButton.click()
+  }
 })
 
 $doneButton.on('click', function() {
@@ -120,7 +124,7 @@ function incorrect(name) {
     ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
   `)
   $buzzes.find(':first-child').remove()
-  const next_name = $buzzes.find(':first-child').text().split(' ')[0]
+  const next_name = $buzzes.find(':first-child').contents()[0].data.slice(0, -1)
   $buzzes.find(':first-child').append(`<span><span class="judge" onclick="correct('${next_name}')">✔️</span> <span class="judge" onclick="incorrect('${next_name}')">❌</span></span>`)
   data.leaderboard = leaderboard
   socket.emit('score', data)
