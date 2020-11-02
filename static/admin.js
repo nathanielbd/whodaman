@@ -16,6 +16,8 @@ async function getData(url) {
 	return response.json()
 }
 
+var qcount = 0
+
 var count = 0
 var leaderboard = {}
 var $leaderboard = $('#leaderboard')
@@ -61,7 +63,9 @@ $beginButton.on('click', async function() {
   $beginButton.hide()
   $doneButton.show()
   $skipButton.show()
-  const res = await getData('https://jservice.io/api/random?count=1')
+  // const res = await getData('https://jservice.io/api/random?count=1')
+  const res = questions[qcount]
+  qcount++
   let reset_data = data
   reset_data.res = res
   socket.emit('reset', reset_data)
@@ -70,15 +74,16 @@ $beginButton.on('click', async function() {
       <b>QUESTION</b>
       <br>
       <br>
-      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
-      💯 <span class="li">Points &mdash; ${res[0].value}</span>
-      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
-      🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
+      📙 <span class="li">Category &mdash; ${res.category.title}</span>
+      💯 <span class="li">Points &mdash; ${res.value}</span>
+      🕵️ <span class="li">Question &mdash; ${res.question}</span>
+      ${res.image ? `<img src="${res.image}" width="80%"><br>`: ''}
+      🙋 <span class="li">Answer &mdash; ${res.answer}</span>
     </li>
   `)
-  stakes = res[0].value
+  stakes = res.value
   $buzzes.html('')
-  if (res[0].value == null) {
+  if (res.value == null) {
     $skipButton.click()
   }
 })
@@ -90,19 +95,22 @@ $doneButton.on('click', function() {
 })
 
 $skipButton.on('click', async function() {
-  const res = await getData('https://jservice.io/api/random?count=1')
+  // const res = await getData('https://jservice.io/api/random?count=1')
+  const res = questions[qcount]
+  qcount++
   $qcontent.html(`
     <li class="paragraph">
       <b>QUESTION</b>
       <br>
       <br>
-      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
-      💯 <span class="li">Points &mdash; ${res[0].value}</span>
-      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
-      🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
+      📙 <span class="li">Category &mdash; ${res.category.title}</span>
+      💯 <span class="li">Points &mdash; ${res.value}</span>
+      🕵️ <span class="li">Question &mdash; ${res.question}</span>
+      ${res.image ? `<img src="${res.image}" width="80%"><br>`: ''} 
+      🙋 <span class="li">Answer &mdash; ${res.answer}</span>
     </li>
   `)
-  stakes = res[0].value
+  stakes = res.value
   $buzzes.html('')
   $beginButton.click()
 })

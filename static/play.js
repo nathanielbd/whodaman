@@ -55,9 +55,10 @@ socket.on('reset', function(resetData) {
       <b>QUESTION</b>
       <br>
       <br>
-      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
-      💯 <span class="li">Points &mdash; ${res[0].value}</span>
-      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+      📙 <span class="li">Category &mdash; ${res.category.title}</span>
+      💯 <span class="li">Points &mdash; ${res.value}</span>
+      🕵️ <span class="li">Question &mdash; ${res.question}</span>
+      ${res.image ? `<img src="${res.image}" width="80%">`: ''}
     </li>
   `)
 })
