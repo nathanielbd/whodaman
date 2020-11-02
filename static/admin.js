@@ -26,7 +26,7 @@ var $qcontent = $('#qcontent')
 var $doneButton = $('#done')
 var $skipButton = $('#skip')
 
-var instructions = '<li class="paragraph"><b>INSTRUCTIONS</b><br><br>👫 <span class="li">Share the link in the top right to have people join your game.</span>⏱ <span class="li">Press the "Begin" button to start receiving questions to read or to read the next question.</span>👂 <span class="li">When you\'re done reading the question, hit the \'Done\' button to start accepting buzzes.</span>🎉 <span class="li">Play your game! Earn points for getting the question right, but lose points for getting it wrong.</span>🤟 <span class="li">Once you\'re ready for the next round, press the "Next" button. </span></li>'
+var instructions = '<li class="paragraph"><b>INSTRUCTIONS</b><br><br>👫 <span class="li">Share the link in the top right to have people join your game.</span>⏱ <span class="li">Press the "Begin" button to start receiving questions to read or to read the next question.</span>👂 <span class="li">When you\'re done reading the question, hit the \'Done\' button to start accepting buzzes.</span>🎉 <span class="li">Play your game! Earn points for getting the question right. There is no penalty for getting it wrong.</span>🤟 <span class="li">Once you\'re ready for the next round, press the "Next" button. If no one got the question right, just hit the "Skip" button.</span></li>'
 $qcontent.html(instructions)
 $roomCount.text('0 people')
 
@@ -127,7 +127,7 @@ function correct(name) {
 }
 
 function incorrect(name) {
-  leaderboard[name] -= stakes
+  // leaderboard[name] -= stakes
   $leaderboard.html(`
     ${Object.entries(leaderboard).sort((a,b) => b[1]-a[1]).map(([key, value]) => `<li class="panel__header">${key}<span>${value}</span></li>`).join('')}
   `)
