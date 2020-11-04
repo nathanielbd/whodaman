@@ -96,21 +96,21 @@ $doneButton.on('click', function() {
 
 $skipButton.on('click', async function() {
   // const res = await getData('https://jservice.io/api/random?count=1')
-  const res = questions[qcount]
-  qcount++
-  $qcontent.html(`
-    <li class="paragraph">
-      <b>QUESTION</b>
-      <br>
-      <br>
-      📙 <span class="li">Category &mdash; ${res.category.title}</span>
-      💯 <span class="li">Points &mdash; ${res.value}</span>
-      🕵️ <span class="li">Question &mdash; ${res.question}</span>
-      ${res.image ? `<img src="${res.image}" width="80%"><br>`: ''} 
-      🙋 <span class="li">Answer &mdash; ${res.answer}</span>
-    </li>
-  `)
-  stakes = res.value
+  // const res = questions[qcount]
+  // qcount++
+  // $qcontent.html(`
+  //   <li class="paragraph">
+  //     <b>QUESTION</b>
+  //     <br>
+  //     <br>
+  //     📙 <span class="li">Category &mdash; ${res.category.title}</span>
+  //     💯 <span class="li">Points &mdash; ${res.value}</span>
+  //     🕵️ <span class="li">Question &mdash; ${res.question}</span>
+  //     ${res.image ? `<img src="${res.image}" width="80%"><br>`: ''} 
+  //     🙋 <span class="li">Answer &mdash; ${res.answer}</span>
+  //   </li>
+  // `)
+  // stakes = res.value
   $buzzes.html('')
   $beginButton.click()
 })

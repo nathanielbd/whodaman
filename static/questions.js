@@ -1,10 +1,10 @@
-const questions = [
+let questions = [
 {
     "category": {
         "title": "Modern Entertainment and Memes"
     },
     "value": 100,
-    "question": "Where did the Subtle Asian Traits FaceBook group originate from?",
+    "question": "Where did the Subtle Asian Traits Facebook group originate from?",
     "answer": "Australian, more specifically Melbourne"
 },
 {
@@ -37,14 +37,14 @@ const questions = [
     },
     "value": 100,
     "question": "What does ABG stand for?",
-    "answer": "Asian Baby Girl "
+    "answer": "Asian Baby Girl"
 },
 {
     "category": {
         "title": "Modern Entertainment and Memes"
     },
     "value": 100,
-    "question": "When was bollywood invented?",
+    "question": "When was Bollywood created?",
     "answer": "1930s"
 },
 {
@@ -118,7 +118,7 @@ const questions = [
     },
     "value": 100,
     "question": "What genre does anime including Hello Kitty and Pokemon fall into?",
-    "answer": "The 'komodo' genre"
+    "answer": "The 'kodomo' genre (accept kodomo-muke)"
 },
 {
     "category": {
@@ -141,8 +141,56 @@ const questions = [
         "title": "Modern Entertainment and Memes"
     },
     "value": 100,
-    "question": "What is the most populat professional sport in Japan?",
+    "question": "Who are the four members of Blackpink?",
+    "answer": "Jennie, Jisoo, Lisa, Rosé"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "What is the most popular professional sport in Japan?",
     "answer": "Baseball"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "Who was the highest paid actress on the Forbes China Celebrity 100 list (appearing four years in a row)?",
+    "answer": "Fan BingBing"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "In 2016, which K-Drama was named the most popular show of the year by Korea Broadcasting Advertising Corporation?",
+    "answer": "Descendants of the Sun"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "Name 3 alternative names for bubble tea.",
+    "answer": "Boba, pearl milk tea, boba milk tea, boba tea, boba nai cha, tapioca tea"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "This video game is the most popular in the Philippines",
+    "answer": "DoTA 2"
+},
+{
+    "category": {
+        "title": "Modern Entertainment and Memes"
+    },
+    "value": 100,
+    "question": "Who voiced Prince Zuko in Avatar the Last Airbender?",
+    "answer": "Dante Basco"
 },
 {
     "category": {
@@ -157,7 +205,8 @@ const questions = [
         "title": "Culture"
     },
     "value": 100,
-    "question": "Name four countries that observe the mid-autumn festival."
+    "question": "Name four countries that observe the mid-autumn festival.",
+    "answer": "China, Taiwan, Korea, Japan, Singapore, Vietnam, Cambodia, Malaysia, Indonesia, Thailand, and the Philippines"
 },
 {
     "category": {
@@ -180,17 +229,24 @@ const questions = [
         "title": "Culture"
     },
     "value": 100,
-    "question": "What are the six official religions recognized in Indonesia?",
-    "answer": "Islam, Protestantism, Catholicism, Hinduism, Buddhism, and Confucianism"
+    "question": "What is the most dominant form of Chinese opera that combines music, vocal performance, mime, dance, and acrobatics?",
+    "answer": "Peking opera or Beijing opera"
 },
 {
     "category": {
         "title": "Culture"
     },
     "value": 100,
-    "question": "What is this traditional Vietnamese dress called?",
-    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/ba/KOCIS_Korea_Hanbok-AoDai_FashionShow_03_%289766157012%29.jpg/800px-KOCIS_Korea_Hanbok-AoDai_FashionShow_03_%289766157012%29.jpg",
-    "answer": "Áo dài"
+    "question": "Which country has the most people of Chinese ancestry besides China?",
+    "answer": "Thailand"
+},
+{
+    "category": {
+        "title": "Culture"
+    },
+    "value": 100,
+    "question": "What are the six official religions recognized in Indonesia?",
+    "answer": "Islam, Protestantism, Catholicism, Hinduism, Buddhism, and Confucianism"
 },
 {
     "category": {
@@ -279,6 +335,30 @@ const questions = [
     "value": 100,
     "question": "In Zoroasterianism, Ahura Mazda, primarily fought against which god?",
     "answer": "Angra Mainyu"
+},
+{
+    "category": {
+        "title": "Mythology"
+    },
+    "value": 100,
+    "question": "What four animals make up the Four Symbols found in Chinese constellations?",
+    "answer": "Azure Dragon of the East, Vermilion Bird of the South, White Tiger of the West, and the Black Tortoise of the North"
+},
+{
+    "category": {
+        "title": "Mythology"
+    },
+    "value": 100,
+    "question": "In Hinduism, which goddess of death and destruction is commonly depicted dancing upon a lying Shiva?",
+    "answer": "Kali"
+},
+{
+    "category": {
+        "title": "Mythology"
+    },
+    "value": 100,
+    "question": "The Japanese monarchy, which is said to have started with the legendary Emperor Jimmu, descended from which sun goddess?",
+    "answer": "Amaterasu"
 },
 {
     "category": {
@@ -403,11 +483,44 @@ const questions = [
 },
 {
     "category": {
+        "title": "History"
+    },
+    "value": 100,
+    "question": "What is the largest religous monument in the world?",
+    "answer": "Angkor Wat"  
+},
+{
+    "category": {
+        "title": "History"
+    },
+    "value": 100,
+    "question": "By population, what is the world's largest metropolitan area?",
+    "answer": "Tokyo"  
+},
+{
+    "category": {
+        "title": "History"
+    },
+    "value": 100,
+    "question": "What country's flag is this?",
+    "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f9/Flag_of_Bangladesh.svg/255px-Flag_of_Bangladesh.svg.png",
+    "answer": "Bangladesh"
+},
+{
+    "category": {
+        "title": "History"
+    },
+    "value": 100,
+    "question": "How many languages are spoken in the Philippines?",
+    "answer": "More than 100"  
+},
+{
+    "category": {
         "title": "Geography"
     },
     "value": 100,
     "question": "What is the name of the country located in red?",
-    "image": "https://lh4.googleusercontent.com/9q_fxcxvuRt3h_rlttnJDXVLKTIFk6S77xHkJZgRPcFKkPPtOMrK9ezAOybb8GVVmyRarlFV3o_Fi1SZYC_BxZLaOjD8AHFLjZuLyZ58j6X8RKWfeoCC5TMjy7dYRcg38Gled7Sr",
+    "image": "https://i.imgur.com/S88R8vs.png",
     "answer": "Lebanon" 
 },
 {
@@ -416,7 +529,7 @@ const questions = [
     },
     "value": 100,
     "question": "What is the name of the country located in red?",
-    "image": "https://lh5.googleusercontent.com/WBSoOcryAHIlRLJEJQNeRrfFwaZGRJaL-KOSIevdriPqAonp7o-LK4Qq3-IwYCia7xo6DWGwTs2gQ45faojarpRe25EKUFScoekDPsyo",
+    "image": "https://i.imgur.com/83n86mm.png",
     "answer": "Myanmar"
 },
 {
@@ -425,7 +538,7 @@ const questions = [
     },
     "value": 100,
     "question": "What is the name of the country located in red?",
-    "image": "https://lh6.googleusercontent.com/bbysuQ50NZgw_jhSvWpsp15R1ktjj5gzDWwqwgGRHNmWfZjXri-BfCGHF6jpTMni5eGhkG9F4woUxNRm2UU03YSztdayCnduy0zhmQsc",
+    "image": "https://i.imgur.com/W2Z6pl8.png",
     "answer": "Pakistan"
 },
 {
@@ -434,7 +547,7 @@ const questions = [
     },
     "value": 100,
     "question": "What is the name of the country located in red?",    
-    "image": "https://lh5.googleusercontent.com/FDiQH4ojFOeF9CDoZSD15l3dOLEcFYXd6bm6EsDmDyc-IvHXgLHUwcHV_xhnrGO3b06VV34IM6TigcQxdDvVE28MLj0Q5ES7puWqWYoc",
+    "image": "https://i.imgur.com/EniC4au.png",
     "answer": "Mongolia"
 },
 {
@@ -443,15 +556,39 @@ const questions = [
     },
     "value": 100,
     "question": "What is the name of the country located in red?",    
-    "image": "https://lh4.googleusercontent.com/8_9w6F3ulhKS9G2bM4ZQJrmrI87MluD3QJiMbHFlEnu1DBUROZhPzVtNYsUUrQv5X-Vz_Pb0QhGzJnx89Ew2rgJcfuVvCJZQ2r7jkj-e9KNSl47RlnvtDiHP2ztLJyfKHD86SEob",
+    "image": "https://i.imgur.com/WUVLxQ6.png",
     "answer": "Turkey"
+},
+{
+    "category": {
+        "title": "Geography"
+    },
+    "value": 100,
+    "question": "How many islands are in Indonesia?",    
+    "answer": "17,508 islands"
+},
+{
+    "category": {
+        "title": "Geography"
+    },
+    "value": 100,
+    "question": "Where is the Gobi Desert located?",    
+    "answer": "Mongolia and China"
+},
+{
+    "category": {
+        "title": "Geography"
+    },
+    "value": 100,
+    "question": "What is the longest river on the Asian continent?",    
+    "answer": "Yangtze river (Chang jiang) in China"
 },
 {
     "category": {
         "title": "Food"
     },
     "value": 100,
-    "question": "This country has the most amounf of Michelin stars.",
+    "question": "This country has the most amount of Michelin stars.",
     "answer": "Japan"
 },
 {
@@ -492,7 +629,15 @@ const questions = [
     },
     "value": 100,
     "question": "What is the name for this butter that is made from separating the milk solids from the liquid fats, resulting in a higher smoking point. It is commonly used in cooking.",
-    "answer": "Ghee"    
+    "answer": "Ghee or clarified butter"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "What is balut?",
+    "answer": "Fertilized duck egg"    
 },
 {
     "category": {
@@ -528,10 +673,64 @@ const questions = [
 },
 {
     "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "This Japanese breakfast dish is made from fermented soybeans.",
+    "answer": "Natto"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "According to 'Great Big Story,' where can the hardest cheese be found?",
+    "answer": "Nepal"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "What Vietnamese noodle dish has become popular in the West?",
+    "answer": "Pho"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "Which country is the highest consumer of sticky rice?",
+    "answer": "Laos"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "In which country was Red Bull invented in?",
+    "answer": "Thailand"    
+},
+{
+    "category": {
+        "title": "Food"
+    },
+    "value": 100,
+    "question": "Other than Yemen, which other country in Asia has never had a McDonald's?",
+    "answer": "Cambodia"    
+}
+]
+
+questions = questions
+  .map((a) => ({sort: Math.random(), value: a}))
+  .sort((a, b) => a.sort - b.sort)
+  .map((a) => a.value)
+
+questions.push({
+    "category": {
         "title": "Finish"
     },
     "value": 0,
     "question": "Did you have fun?",
     "answer": "Yes!"
-}
-]
+})
