@@ -1,6 +1,6 @@
 
 {% extends "layout.html" %}
-{% block title %} SASE Bowl - Admin {% endblock %}
+{% block title %} QuizBuzz - Admin {% endblock %}
 {% block head %}
     {{ super() }}
 {% endblock %}
@@ -8,7 +8,7 @@
     <form id="start" class="center">
       <main>
           <header>
-            <h1>SASE Bowl</h1>
+            <h1>QuizBuzz</h1>
           </header>
           <input id="room" type="text" placeholder="Game Name" />
           <p>Create a game, and start buzzing in!</p>
@@ -17,7 +17,7 @@
     <main>
       <section id="panel">
         <div class="panel__header">
-          <h1>SASE Bowl</h1>
+          <h1>QuizBuzz</h1>
           <input id="shareLink" disabled />
         </div>
         <div class="panel">
@@ -49,7 +49,6 @@
     </main>
 {% endblock %}
 {% block scripts %}
-    <script src="{{ url_for('static', filename='questions.js') }}"></script>
     <script src="{{ url_for('static', filename='admin.js') }}"></script>
     <script>
     window.onbeforeunload = function(){
