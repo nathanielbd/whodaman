@@ -18,10 +18,7 @@ $score = $('#score')
 $startForm.on('submit', function(event) {
   event.preventDefault()
   data.name = $nameField.val()
-  $startForm.hide()
-  $panel.show()
-  $nameField.blur()
-  socket.emit('join', data)
+  socket.emit('namespace', data)
 })
 
 $buzzButton.on('click', function(event) {
@@ -29,6 +26,17 @@ $buzzButton.on('click', function(event) {
   socket.emit('buzz', data)
   $buzzButton.hide()
   $state.show()
+})
+
+socket.on('namespace', function(canJoin) {
+  if (canJoin) {
+    $startForm.hide()
+    $panel.show()
+    $nameField.blur()
+  }
+  else {
+    alert('Pick a different name!')
+  }
 })
 
 socket.on('buzz', function(buzzData) {
@@ -54,9 +62,9 @@ socket.on('reset', function(resetData) {
       <b>QUESTION</b>
       <br>
       <br>
-      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
-      💯 <span class="li">Points &mdash; ${res[0].value}</span>
-      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+      📙 <span class="li">Category &mdash; ${res.results[0].category}</span>
+      💯 <span class="li">Points &mdash; 100</span>
+      🕵️ <span class="li">Question &mdash; ${res.results[0].question}</span>
     </li>
   `)
 })

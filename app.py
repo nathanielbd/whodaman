@@ -5,11 +5,13 @@ import os
 app = Flask(__name__)
 SECRET_KEY = os.urandom(32)
 app.config['SECRET_KEY'] = SECRET_KEY
-socketio = SocketIO(app)
+socketio = SocketIO(app, manage_session=False)
 socketio.init_app(app, cors_allowed_origins="*")
 
-# dictionary pairing room name to admin socket id
+# dictionary mapping room name to admin socket id
 rooms = {}
+# dictionary mapping room name to player names
+names = {}
 
 @app.route('/')
 def index():
@@ -40,13 +42,13 @@ def on_admin_disconnect():
 
 # only emitted by players
 
-@socketio.on('join')
-def on_join(data):
-    name = data['name']
-    room = data['room']
-    join_room(room)
-    emit('join', data, room=room)
-    print(f'{name} joined {room}')
+# @socketio.on('join')
+# def on_join(data):
+#     name = data['name']
+#     room = data['room']
+#     join_room(room)
+#     emit('join', data, room=room)
+#     print(f'{name} joined {room}')
 
 @socketio.on('buzz')
 def on_buzz(data):
@@ -58,6 +60,21 @@ def on_buzz(data):
 def exists(data):
     room = data['room']
     emit('exists', room in rooms)
+
+@socketio.on('namespace')
+def check_namespace(data):
+    name = data['name']
+    room = data['room']
+    can_join = not room in names.keys() or not name in names[room]
+    emit('namespace', can_join)
+    if can_join:
+        join_room(room)
+        emit('join', data, room=room)
+        if not room in names.keys():
+            names[room] = [name]
+        else:
+            names[room].append(name)
+        print(f'{name} joined {room}')
 
 # only emitted by admin
 
