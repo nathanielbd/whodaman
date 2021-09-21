@@ -14,14 +14,14 @@ html, body {
 
 body {
   font-family: "San Francisco", system-ui, -apple-system, "Helvetica Neue", Helvetica, sans-serif;
-  background: #0668B3;
+  background: #E02141;
   color: #fefefe;
   text-align: center;
   padding-bottom: 2rem;
 }
 
 .body--admin {
-  background: #7DC242;
+  background: #6A21E0;
 }
 
 main {
