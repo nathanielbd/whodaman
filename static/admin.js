@@ -63,7 +63,7 @@ $beginButton.on('click', async function() {
   $beginButton.hide()
   $doneButton.show()
   $skipButton.show()
-  const res = await getData('https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple')
+  const res = await getData('https://jservice.io/api/random?count=1')
   let reset_data = data
   reset_data.res = res
   socket.emit('reset', reset_data)
@@ -72,13 +72,13 @@ $beginButton.on('click', async function() {
       <b>QUESTION</b>
       <br>
       <br>
-      📙 <span class="li">Category &mdash; ${res.results[0].category}</span>
-      💯 <span class="li">Points &mdash; 100</span>
-      🕵️ <span class="li">Question &mdash; ${res.results[0].question}</span>
-      🙋 <span class="li">Answer &mdash; ${res.results[0].correct_answer}</span>
+      📙 <span class="li">Category &mdash; ${res[0].category.title}</span>
+      💯 <span class="li">Points &mdash; ${res[0].value}</span>
+      🕵️ <span class="li">Question &mdash; ${res[0].question}</span>
+      🙋 <span class="li">Answer &mdash; ${res[0].answer}</span>
     </li>
   `)
-  stakes = 100
+  stakes = res[0].value
   $buzzes.html('')
   if (res[0].value == null) {
     $skipButton.click()
