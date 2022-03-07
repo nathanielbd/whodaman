@@ -1,8 +1,10 @@
-# WhoDaMan
+# Ouijordle
 
-A Jeopardy! Game using [jService](http://jservice.io), Flask, and SocketIO. Built upon [Buzzer](https://glitch.com/~buzzer).
+What if r/AskOuiji and Wordle had a child?
 
-# Run locally
+Made using [wordle-clone](https://github.com/WebDevSimplified/wordle-clone)
+
+## Run locally
 
 ```
 python3 -m venv env
@@ -10,19 +12,3 @@ source env/bin/activate
 pip install -r requirements.txt
 python app.py
 ```
-
-## Create a game
-
-![](create.gif)
-
-## Join a game
-
-![](join.gif)
-
-## Read questions and buzz in
-
-![](buzz.gif)
-
-## Get the highest score to win
-
-![](score.gif)

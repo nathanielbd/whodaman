@@ -1,67 +1,53 @@
 var socket = io()
-var $startForm = $('#start')
+var $startForm = $("#start")
+var $controls = $('#controls')
 var $nameField = $('#name')
-var $panel = $('#panel')
-var $buzzButton = $('#buzz')
-var $state = $('#state')
-var $buzzes = $('#buzzes')
-var data = {
-  room: window.location.pathname.split('/')[1], // get the first path
-  name: null
+var $game = $('#game')
+
+var $shareLink = $('#shareLink')
+var $roomCount = $('#roomCount')
+var data = { 
+    room: window.location.pathname.split('/')[1],
+    name: null
 }
 
-$('body').addClass('center')
+var $names = $("#names")
+var $players = $("#players")
 
 var count = 0
-$score = $('#score')
+var playerList = []
+var order;
+
+var $beginButton = null;
+
+$roomCount.text('0 players')
 
 $startForm.on('submit', function(event) {
-  event.preventDefault()
-  data.name = $nameField.val()
-  $startForm.hide()
-  $panel.show()
-  $nameField.blur()
-  socket.emit('join', data)
+    event.preventDefault()
+    data.name = $nameField.val()
+    socket.emit('join', data)
 })
 
-$buzzButton.on('click', function(event) {
-  event.preventDefault()
-  socket.emit('buzz', data)
-  $buzzButton.hide()
-  $state.show()
+socket.on('name_taken', function(data) {
+    alert(`The name ${data.name} is taken in this room.`)
 })
 
-socket.on('buzz', function(buzzData) {
-  count++
-  
-  if (data.name === buzzData.name) {
-    $state.text('Number ' + count)
-  }
+socket.on('join', function(data) {
+    count++
+    $startForm.hide()
+    $controls.show()
+    $nameField.blur()
+    $shareLink.val(window.location.host+'/'+data.room)
+    $roomCount.text(count === 1 ? count + ' player' : count + ' players')
+    // $players.append(`<span class="bubble">${data.name}</span>`)
+    // $names.append(`<span class="bubble">${data.name}</span>`)
 })
 
-socket.on('score', function(scoreData) {
-  var my_score = scoreData.leaderboard[$nameField.val()]
-  $score.html(`${my_score} (${Object.values(scoreData.leaderboard).sort().pop() - my_score} to lead)`)
-})
-
-socket.on('reset', function(resetData) {
-  count = 0
-  $buzzButton.hide()
-  let res = resetData.res
-  // $state.show().text('Waiting...')
-  $state.show().html(`
-    <li class="paragraph">
-      <b>QUESTION</b>
-      <br>
-      <br>
-      📙 <span class="li">Category &mdash; ${res.results[0].category}</span>
-      💯 <span class="li">Points &mdash; 100</span>
-      🕵️ <span class="li">Question &mdash; ${res.results[0].question}</span>
-    </li>
-  `)
-})
-
-socket.on('begin', function() {
-  $buzzButton.show()
-  // $state.hide()
+socket.on('player_list', function(player_list) {
+    playerList = player_list
+    innerHTML = player_list.map(name => `<span class="bubble">${name}</span>`).join('')
+    $players.html(innerHTML)
+    $names.html(innerHTML)
+    count = playerList.length
+    $roomCount.text(count === 1 ? count + ' player' : count + ' players')
 })
