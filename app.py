@@ -74,6 +74,12 @@ def on_begin(data):
     if is_admin(request.sid, room):
         emit('begin', rand, room=room)
 
+@socketio.on('daily')
+def on_daily(data):
+    room = data['room']
+    if is_admin(request.sid, room):
+        emit('daily', room=room)
+
 @socketio.on('resume')
 def on_resume(data):
     room = data['room']

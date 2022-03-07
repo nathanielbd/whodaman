@@ -15295,10 +15295,9 @@ const DANCE_ANIMATION_DURATION = 500
 const keyboard = document.querySelector("[data-keyboard]")
 const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
-// const offsetFromDate = new Date(2022, 0, 1)
-// const msOffset = Date.now() - offsetFromDate
-// const dayOffset = msOffset / 1000 / 60 / 60 / 24
-// const targetWord = targetWords[Math.floor(dayOffset)]
+const offsetFromDate = new Date(2022, 0, 1)
+const msOffset = Date.now() - offsetFromDate
+const dayOffset = msOffset / 1000 / 60 / 60 / 24
 var targetWord = targetWords[Math.floor(Math.random() * targetWords.length)]
 
 // startInteraction()
@@ -15547,7 +15546,7 @@ function getShareText() {
   if (lastGuess !== targetWord) {
     tries = 'X'
   }
-  return `Ouijordle ${tries}/6<br>${emojis}<br>${window.location.origin}`
+  return `Ouijordle #${Math.floor(dayOffset)} ${tries}/6<br>${emojis}<br>https://z.umn.edu/ouijordle`
 }
 
 socket.on('end', function() {
@@ -15573,6 +15572,7 @@ socket.on('restart', function(rand) {
   $("#names").children().eq(0).addClass("highlight")
   $('.guess-grid').html('<div class="tile"></div>'.repeat(30))
   $('.keyboard').html(getKeyboardInitialHTML())
+  daily = false
 })
 
 function getKeyboardInitialHTML() {
@@ -15616,7 +15616,9 @@ function getKeyboardInitialHTML() {
 
 function checkWinLose(guess, tiles) {
   if (guess === targetWord) {
-    showAlert(getShareText(), null, true)
+    if (daily) {
+      showAlert(getShareText(), null, true)
+    }
     showAlert("You win!", null)
     danceTiles(tiles)
     stopInteraction()
@@ -15627,7 +15629,9 @@ function checkWinLose(guess, tiles) {
 
   const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
   if (remainingTiles.length === 0) {
-    showAlert(getShareText(), null, true)
+    if (daily) {
+      showAlert(getShareText(), null, true)
+    }
     showAlert(targetWord.toUpperCase(), null)
     stopInteraction()
     clearInterval(clock)
@@ -15685,6 +15689,20 @@ socket.on('begin', function(rand) {
   startClock();
   $controls.hide()
   $game.show()
+  daily = false
+})
+
+socket.on('daily', function() {
+  targetWord = targetWords[Math.floor(dayOffset)]
+  order = playerList.indexOf(data.name)
+  if (order === 0) {
+    startInteraction()
+  }
+  $("#names").children().eq(0).toggleClass("highlight")
+  startClock();
+  $controls.hide()
+  $game.show()
+  daily = true
 })
 
 socket.on('resume', function(data) {

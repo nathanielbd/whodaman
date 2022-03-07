@@ -20,8 +20,11 @@
           <div class="panel__label">Players &mdash; <span id="roomCount"></span></div>
           <div class="panel__header" id="players">
           </div>
-          <button id="begin">Begin</button>
-
+          <div class="panel__header">
+            <button id="daily">Daily Ouijordle</button>
+            <span style="width: 2em"></span>
+            <button id="begin">Infinite Ouijordle</button>
+          </div>
           <h2>Rules</h2>
           <p>Guess the <strong>OUIJORDLE</strong> in six guesses with up to four of your friends.</p>
           <p>Each player silently enters one letter in turn to form their guess. The only words players can say are <strong>YES</strong>, <strong>NO</strong>, and <strong>GOODBYE</strong>.</p>
@@ -39,7 +42,8 @@
         </div>
         <div class="alert-container" data-alert-container></div>
         <div class="combined-panel">
-          <h1 id="time">05:00</h1>
+          <div style="display:flex;flex-direction:row">
+          <h1 id="time">07:42</h1>
           <div data-guess-grid class="guess-grid">
             <div class="tile"></div>
             <div class="tile"></div>
@@ -72,6 +76,7 @@
             <div class="tile"></div>
             <div class="tile"></div>
           </div>
+        </div>
         </div>
         <div data-keyboard class="keyboard">
           <button class="key" data-key="Q">Q</button>

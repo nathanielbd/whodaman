@@ -20,6 +20,8 @@ var order;
 
 var $beginButton = null;
 
+var daily;
+
 $roomCount.text('0 players')
 
 $startForm.on('submit', function(event) {

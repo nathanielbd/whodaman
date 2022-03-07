@@ -34,6 +34,10 @@ input:disabled {
   color:white;
 }
 
+#shareLink {
+  width: 30em;
+}
+
 footer {
   position: fixed;
   text-align: right;
@@ -176,6 +180,7 @@ footer a:hover {
 .combined-panel {
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 #time {

@@ -18,8 +18,11 @@ var playerList = []
 var playerStats = {}
 var order;
 
+var daily;
+
 var $players = $('#players')
 var $beginButton = $('#begin')
+var $dailyButton = $('#daily')
 
 $roomCount.text('0 players')
 
@@ -55,6 +58,10 @@ socket.on('join', function(data) {
 
 $beginButton.on('click', function() {
     socket.emit('begin', Object.assign({}, data, { rand: Math.random() }))
+})
+
+$dailyButton.on('click', function() {
+  socket.emit('daily', data)
 })
 
 socket.on('create', function(success) {
