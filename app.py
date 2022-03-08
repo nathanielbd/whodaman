@@ -133,7 +133,8 @@ def on_delete_letter(data):
 def on_submit_guess(data):
     room = data['room']
     order = data['order']
-    emit('submit_guess', order, room=room)
+    idx = data['idx']
+    emit('submit_guess', { 'order': order, 'idx': idx }, room=room)
 
 @socketio.on('end')
 def on_end(room):

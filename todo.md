@@ -1,13 +1,14 @@
 - extra features
     - end of game statistics
     - emotes
-- bug where the clocks are not synced
-    - Edge pauses `setInterval` when the tab is inactive (like when you alt-tab), but other browsers do not
+- bugs
+    - Edge pauses `setInterval` when the tab is inactive (like when you alt-tab), but other browsers do not which causes the clocks to be out of sync
+    - fix logic when the player guesses a word with double letters
+    - spaces should not be allowed in room names
 - edge cases
     - user refreshes page
     - user is disconnected
     - user joins when game is active
     - a non-admin joins before the admin
-- add infinite number of guesses if needed
+    - ability to rejoin room as an admin
 - actually enforce the 5 player max rule
-- fix logic when the player guesses a word with double letters

@@ -15330,9 +15330,11 @@ function handleMouseClick(e) {
 
   if (e.target.matches("[data-enter]")) {
     if (activeTiles.length === WORD_LENGTH) {
+      stopInteraction()
       $(activeTiles[activeTiles.length - 1]).toggleClass("confirmed")
+      $("#names").children().eq(order).toggleClass("highlight")
       submitGuess()
-      socket.emit('submit_guess', { order: order, room: data.room })
+      socket.emit('submit_guess', { order: order, idx: (order+1)%playerList.length, room: data.room })
       return
     }
     else {
@@ -15340,7 +15342,7 @@ function handleMouseClick(e) {
         stopInteraction()
         $(activeTiles[activeTiles.length - 1]).toggleClass("confirmed")
         $("#names").children().eq(order).toggleClass("highlight")
-        socket.emit('resume', { room: data.room, idx: activeTiles.length, order: order })
+        socket.emit('resume', { room: data.room, idx: (order+1)%playerList.length, order: order })
         return
       }
     }
@@ -15360,9 +15362,11 @@ function handleKeyPress(e) {
 
   if (e.key === "Enter") {
     if (activeTiles.length === WORD_LENGTH) {
+      stopInteraction()
       $(activeTiles[activeTiles.length - 1]).toggleClass("confirmed")
+      $("#names").children().eq(order).toggleClass("highlight") 
       submitGuess()
-      socket.emit('submit_guess', { order: order, room: data.room })
+      socket.emit('submit_guess', { order: order, idx: (order+1)%playerList.length, room: data.room })
       return
     }
     else {
@@ -15370,7 +15374,7 @@ function handleKeyPress(e) {
         stopInteraction()
         $(activeTiles[activeTiles.length - 1]).toggleClass("confirmed")
         $("#names").children().eq(order).toggleClass("highlight")
-        socket.emit('resume', { room: data.room, idx: activeTiles.length, order: order })
+        socket.emit('resume', { room: data.room, idx: (order+1)%playerList.length, order: order })
         return
       }
     }
@@ -15472,7 +15476,7 @@ function flipTile(tile, index, array, guess) {
         tile.addEventListener(
           "transitionend",
           () => {
-            startInteraction()
+            // startInteraction()
             checkWinLose(guess, array)
             timer += 30
           },
@@ -15737,10 +15741,16 @@ socket.on('delete_letter', function(sender_order) {
   }
 })
 
-socket.on('submit_guess', function(sender_order) {
+socket.on('submit_guess', function(data) {
   const activeTiles = getActiveTiles()
-  if (order !== sender_order) {
+  idxToHighlight = data.idx % playerList.length
+  $("#names").children().eq(idxToHighlight).toggleClass("highlight")
+  if (order !== data.order) {
+    $("#names").children().eq(data.order).toggleClass("highlight")
     $(activeTiles[activeTiles.length - 1]).toggleClass("confirmed")
     submitGuess()
+  }
+  if (order === idxToHighlight) {
+    startInteraction()
   }
 })
