@@ -15322,7 +15322,7 @@ function handleMouseClick(e) {
       socket.emit('overwrite_letter', { order: order, key: e.target.dataset.key, room: data.room })
     }
     else{
-      pressKey(e.key)
+      pressKey(e.target.dataset.key)
       socket.emit('write_letter', { order: order, key: e.target.dataset.key, room: data.room })
       return
     }
