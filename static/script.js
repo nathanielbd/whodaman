@@ -15444,7 +15444,6 @@ function submitGuess() {
   stopInteraction()
   activeTiles.forEach((...params) => flipTile(...params, guess))
   activeTiles.forEach((tile) => $(tile).toggleClass("confirmed"))
-  timer += 30
 }
 
 function flipTile(tile, index, array, guess) {
@@ -15475,6 +15474,7 @@ function flipTile(tile, index, array, guess) {
           () => {
             startInteraction()
             checkWinLose(guess, array)
+            timer += 30
           },
           { once: true }
         )
@@ -15546,7 +15546,7 @@ function getShareText() {
   if (lastGuess !== targetWord) {
     tries = 'X'
   }
-  return `Ouijordle #${Math.floor(dayOffset)} ${tries}/6<br>${emojis}<br>https://z.umn.edu/ouijordle`
+  return `Ouijordle #${Math.floor(dayOffset)} in ${tries}/6 with ${minutes}:${seconds} left and ${count-1} of my friends!<br>${emojis}<br>https://z.umn.edu/ouijordle`
 }
 
 socket.on('end', function() {
