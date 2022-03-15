@@ -26,7 +26,7 @@ $roomCount.text('0 players')
 
 $startForm.on('submit', function(event) {
     event.preventDefault()
-    data.name = $nameField.val()
+    data.name = $nameField.val().trim()
     socket.emit('join', data)
 })
 

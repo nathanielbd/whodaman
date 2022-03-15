@@ -15478,7 +15478,7 @@ function flipTile(tile, index, array, guess) {
           () => {
             // startInteraction()
             checkWinLose(guess, array)
-            timer += 30
+            timer += 20
           },
           { once: true }
         )
@@ -15565,7 +15565,7 @@ socket.on('end', function() {
 socket.on('restart', function(rand) {
   targetWord = targetWords[Math.floor(rand * targetWords.length)]
   alertContainer.innerHTML = ''
-  timer = 5 * 60
+  timer = 2 * 60
   startClock()
   if (order === 0) {
     startInteraction()
@@ -15573,7 +15573,9 @@ socket.on('restart', function(rand) {
   else {
     stopInteraction()
   }
+  $("#names").children().removeClass("highlight")
   $("#names").children().eq(0).addClass("highlight")
+  // remove highlight from the other children
   $('.guess-grid').html('<div class="tile"></div>'.repeat(30))
   $('.keyboard').html(getKeyboardInitialHTML())
   daily = false
@@ -15660,7 +15662,7 @@ function danceTiles(tiles) {
 
 // https://stackoverflow.com/a/20618517
 
-var timer = 5 * 60, minutes, seconds;
+var timer = 2 * 60, minutes, seconds;
 var display = $('#time');
 var clock;
 
@@ -15679,8 +15681,21 @@ function startClock() {
         stopInteraction()
         clearInterval(clock);
     }
+
+    socket.emit('timer', { room: data.room, time: timer })
   }, 1000);
 }
+
+socket.on('timer', function(time) {
+  timer = time
+  minutes = parseInt(timer / 60, 10)
+  seconds = parseInt(timer % 60, 10);
+
+  minutes = minutes < 10 ? "0" + minutes : minutes;
+  seconds = seconds < 10 ? "0" + seconds : seconds;
+
+  display.text(minutes + ":" + seconds);
+})
 
 // var socket = io()
 socket.on('begin', function(rand) {

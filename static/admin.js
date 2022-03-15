@@ -28,7 +28,7 @@ $roomCount.text('0 players')
 
 $startForm.on('submit', function(event) {
     event.preventDefault()
-    data.room = $roomField.val()
+    data.room = $roomField.val().trim()
 
     socket.emit('create', data)
 })

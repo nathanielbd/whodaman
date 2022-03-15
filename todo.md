@@ -2,13 +2,13 @@
     - end of game statistics
     - emotes
 - bugs
-    - Edge pauses `setInterval` when the tab is inactive (like when you alt-tab), but other browsers do not which causes the clocks to be out of sync
     - fix logic when the player guesses a word with double letters
-    - spaces should not be allowed in room names
+    - refactor joining room so that it makes the admin emit an event to check if the name is taken instead of the server
 - edge cases
     - user refreshes page
     - user is disconnected
     - user joins when game is active
     - a non-admin joins before the admin
     - ability to rejoin room as an admin
+    - destroy rooms when no players are in
 - actually enforce the 5 player max rule

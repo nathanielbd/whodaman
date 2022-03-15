@@ -148,5 +148,12 @@ def on_restart(data):
     if is_admin(request.sid, room):
         emit('restart', rand, room=room)
 
+@socketio.on('timer')
+def on_timer(data):
+    room = data['room']
+    time = data['time']
+    if is_admin(request.sid, room):
+        emit('timer', time, room=room)
+
 if __name__ == '__main__':
     socketio.run(app, debug=True, host='0.0.0.0')
