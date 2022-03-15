@@ -1,5 +1,6 @@
 - extra features
     - end of game statistics for who used the most time (included in share text)
+    - matchmaking
     - emotes
 - bugs
     - fix logic when the player guesses a word with double letters
@@ -8,5 +9,4 @@
     - user is disconnected
     - user joins when game is active
     - ability to rejoin room as an admin
-    - destroy rooms when no players are in
 - refactor and clean up code

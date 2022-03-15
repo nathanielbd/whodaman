@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, url_for
-from flask_socketio import SocketIO, emit, join_room
+from flask_socketio import SocketIO, emit, join_room, close_room
 import os
 
 app = Flask(__name__)
@@ -37,9 +37,10 @@ def on_admin_disconnect():
     room_to_del = None
     for room in rooms:
         if is_admin(request.sid, room):
-            room_to_del = rooms[room]
-    del room_to_del
-    emit('leave')
+            room_to_del = room
+            close_room(room)
+    if room_to_del:
+        del rooms[room_to_del]
 
 @socketio.on('exists')
 def exists(data):

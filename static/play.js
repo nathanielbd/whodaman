@@ -52,17 +52,6 @@ socket.on('full', function() {
     alert('The room is at max capacity.')
 })
 
-// socket.on('join', function(data) {
-//     count++
-//     $startForm.hide()
-//     $controls.show()
-//     $nameField.blur()
-//     $shareLink.val(window.location.host+'/'+data.room)
-//     $roomCount.text(count === 1 ? count + ' player' : count + ' players')
-//     // $players.append(`<span class="bubble">${data.name}</span>`)
-//     // $names.append(`<span class="bubble">${data.name}</span>`)
-// })
-
 socket.on('player_list', function(player_list) {
     $startForm.hide()
     $controls.show()
