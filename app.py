@@ -11,9 +11,6 @@ socketio.init_app(app, cors_allowed_origins="*")
 # dictionary pairing room name to admin socket id
 rooms = {}
 
-# dictionary pairing room name to list of player names in the room
-names = {}
-
 @app.route('/')
 def index():
     return render_template('landing.html')
@@ -49,21 +46,17 @@ def exists(data):
     room = data['room']
     emit('exists', room in rooms, callback=ack)
 
+@socketio.on('taken')
+def on_taken(data):
+    room = data['room']
+    name = data['name']
+    emit('taken', { 'name': name }, room=room)
+
 @socketio.on('join')
 def on_join(data):
     name = data['name']
     room = data['room']
-    # refactor so that it is like create
-    # and checks if the name is taken
-    if (room in names):
-        if (name in names[room]):
-            emit('name_taken', { 'name': name })
-            return
-        else:
-            join_room(room)
-            names[room].append(name)
-    else:
-        names[room] = [name]
+    join_room(room)
     emit('join', data, room=room)
     print(f'{name} joined {room}')
 
@@ -107,6 +100,16 @@ def on_player_list(data):
     room = data['room']
     player_list = data['player_list']
     emit('player_list', player_list, room=room)
+
+@socketio.on('empty')
+def on_empty(room):
+    if is_admin(request.sid, room):
+        emit('empty', room=room)
+
+@socketio.on('full')
+def on_full(room):
+    if is_admin(request.sid, room):
+        emit('full', room=room)
 
 @socketio.on('write_letter')
 def on_write_letter(data):

@@ -41,19 +41,32 @@ $adminForm.on('submit', function(event) {
   event.preventDefault()
   data.name = $nameField.val()
   socket.emit('join', data)
+  $adminForm.hide()
+  $nameField.blur()
+  $info.show()
 })
 
-socket.on('join', function(data) {
-    $adminForm.hide()
-    $nameField.blur()
-    $info.show()
-    count++
-    $roomCount.text(count === 1 ? count + ' player' : count + ' players')
-    $players.append(`<span class="bubble">${data.name}</span>`)
-    $names.append(`<span class="bubble">${data.name}</span>`)
-    playerStats[data.name] = {fails: 0, time: 0}
-    playerList.push(data.name)
-    socket.emit("player_list", { room: data.room, player_list: playerList })
+socket.on('join', function(recData) {
+    if (playerList.length === 0 && recData.name !== data.name) {
+      socket.emit('empty', recData.room)
+      return
+    }
+    if (playerList.length >= 5) {
+      socket.emit('full', recData.room)
+      return
+    }
+    if (playerList.includes(recData.name)) {
+      socket.emit('taken', { room: recData.room, name: recData.name })
+    } 
+    else {
+      count++
+      $roomCount.text(count === 1 ? count + ' player' : count + ' players')
+      $players.append(`<span class="bubble">${recData.name}</span>`)
+      $names.append(`<span class="bubble">${recData.name}</span>`)
+      playerStats[recData.name] = {fails: 0, time: 0}
+      playerList.push(recData.name)
+      socket.emit("player_list", { room: recData.room, player_list: playerList })
+    }
 })
 
 $beginButton.on('click', function() {

@@ -1,14 +1,12 @@
 - extra features
-    - end of game statistics
+    - end of game statistics for who used the most time (included in share text)
     - emotes
 - bugs
     - fix logic when the player guesses a word with double letters
-    - refactor joining room so that it makes the admin emit an event to check if the name is taken instead of the server
 - edge cases
     - user refreshes page
     - user is disconnected
     - user joins when game is active
-    - a non-admin joins before the admin
     - ability to rejoin room as an admin
     - destroy rooms when no players are in
-- actually enforce the 5 player max rule
+- refactor and clean up code
