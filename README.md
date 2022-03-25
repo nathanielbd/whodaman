@@ -1,5 +1,7 @@
 # Ouijordle
 
+![](/demo.gif)
+
 What if r/AskOuiji and Wordle had a child?
 
 Made using [wordle-clone](https://github.com/WebDevSimplified/wordle-clone)
