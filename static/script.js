@@ -15680,6 +15680,7 @@ function startClock() {
         showAlert(targetWord.toUpperCase(), null)
         stopInteraction()
         clearInterval(clock);
+        socket.emit('end', data.room)
     }
 
     socket.emit('timer', { room: data.room, time: timer })
