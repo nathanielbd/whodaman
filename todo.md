@@ -2,8 +2,6 @@
     - end of game statistics for who used the most time (included in share text)
     - matchmaking
     - emotes
-- bugs
-    - fix logic when the player guesses a word with double letters
 - edge cases
     - user refreshes page
     - user is disconnected

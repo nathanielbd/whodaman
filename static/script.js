@@ -15421,6 +15421,8 @@ function deleteKey() {
   $(lastTile).removeClass("confirmed")
 }
 
+// https://github.com/WebDevSimplified/wordle-clone/pull/11
+
 function submitGuess() {
   const activeTiles = [...getActiveTiles()]
   if (activeTiles.length !== WORD_LENGTH) {
@@ -15446,11 +15448,59 @@ function submitGuess() {
   }
 
   stopInteraction()
-  activeTiles.forEach((...params) => flipTile(...params, guess))
+
+  let matchingChars = ''
+  const classDictionary = { 0: '', 1: '', 2: '', 3: '', 4: '' }
+
+  for (let i  = 0; i < targetWord.length; i++) {
+    const letter = guess[i]
+
+    const rgx = new RegExp(`${letter}`, 'g')
+    const totalAppearances = (targetWord.match(rgx) || []).length
+    const priorAppearances = (matchingChars.match(rgx) || []).length
+
+    if (!targetWord.includes(letter)) {
+      classDictionary[i] = 'wrong'
+      continue
+    }
+
+    if (targetWord[i] === guess[i]) {
+      classDictionary[i] = 'correct'
+      matchingChars += letter
+      continue
+    }
+
+    let futureCorrectAppearances = 0
+    for (let j = i; j < targetWord.length; j++) {
+      if (targetWord[j] === guess[j] && targetWord[j] === letter) {
+        futureCorrectAppearances++
+      }
+    }
+
+    if (futureCorrectAppearances >= totalAppearances) {
+      classDictionary[i] = 'wrong'
+      continue
+    }
+
+    if (priorAppearances >= totalAppearances) {
+      classDictionary[i] = 'wrong'
+      continue
+    }
+
+    if (priorAppearances + futureCorrectAppearances >= totalAppearances) {
+      classDictionary[i] = 'wrong'
+      continue
+    }
+
+    classDictionary[i] = 'wrong-location'
+    matchingChars += matchingChars + letter
+  }
+
+  activeTiles.forEach((value, index, array) => flipTile(value, index, array, guess, classDictionary[index]))
   activeTiles.forEach((tile) => $(tile).toggleClass("confirmed"))
 }
 
-function flipTile(tile, index, array, guess) {
+function flipTile(tile, index, array, guess, className) {
   const letter = tile.dataset.letter
   const key = keyboard.querySelector(`[data-key="${letter}"i]`)
   setTimeout(() => {
@@ -15461,16 +15511,9 @@ function flipTile(tile, index, array, guess) {
     "transitionend",
     () => {
       tile.classList.remove("flip")
-      if (targetWord[index] === letter) {
-        tile.dataset.state = "correct"
-        key.classList.add("correct")
-      } else if (targetWord.includes(letter)) {
-        tile.dataset.state = "wrong-location"
-        key.classList.add("wrong-location")
-      } else {
-        tile.dataset.state = "wrong"
-        key.classList.add("wrong")
-      }
+
+      tile.dataset.state = className
+      key.classList.add(className)
 
       if (index === array.length - 1) {
         tile.addEventListener(
@@ -15676,7 +15719,7 @@ function startClock() {
 
     display.text(minutes + ":" + seconds);
 
-    if (--timer < 0) {
+    if (--timer < 1) {
         showAlert(targetWord.toUpperCase(), null)
         stopInteraction()
         clearInterval(clock);
