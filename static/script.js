@@ -15608,7 +15608,7 @@ socket.on('end', function() {
 socket.on('restart', function(rand) {
   targetWord = targetWords[Math.floor(rand * targetWords.length)]
   alertContainer.innerHTML = ''
-  timer = 2 * 60
+  timer = 4 * 60
   startClock()
   if (order === 0) {
     startInteraction()
@@ -15705,7 +15705,7 @@ function danceTiles(tiles) {
 
 // https://stackoverflow.com/a/20618517
 
-var timer = 2 * 60, minutes, seconds;
+var timer = 4 * 60, minutes, seconds;
 var display = $('#time');
 var clock;
 
