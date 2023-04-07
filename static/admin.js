@@ -63,7 +63,7 @@ $beginButton.on('click', async function() {
   $beginButton.hide()
   $doneButton.show()
   $skipButton.show()
-  const res = await getData('https://opentdb.com/api.php?amount=1&difficulty=easy&type=multiple')
+  const res = await getData('https://opentdb.com/api.php?amount=10&category=22&difficulty=hard&type=multiple')
   let reset_data = data
   reset_data.res = res
   socket.emit('reset', reset_data)
